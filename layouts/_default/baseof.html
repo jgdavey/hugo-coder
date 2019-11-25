@@ -82,15 +82,19 @@
   {{- else if eq .Site.Params.colorscheme "auto" }}
     {{ $csClass = "colorscheme-auto" }}
   {{- end }}
-  <body class="{{ $csClass }}{{ if .Site.Params.rtl }} rtl{{ end }}">
+  <body class="{{ $csClass }}{{ if .Site.Params.rtl }} rtl{{ end }}{{with .Params.body_class}} {{.}}{{end}}">
     <main class="wrapper">
+      {{ block "header" . -}}
       {{ partial "header.html" . }}
+      {{- end -}}
 
       <div class="content">
         {{ block "content" . }}{{ end }}
       </div>
 
+      {{- block "footer" . -}}
       {{ partial "footer.html" . }}
+      {{- end }}
     </main>
 
     {{- template "_internal/google_analytics.html" . }}
